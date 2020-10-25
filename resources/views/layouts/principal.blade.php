@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" href="images/favicon.ico" type="image/ico" />
 
-    <title>Sistema de Gestion Academica | Fe y Alegria </title>
+    <title>Kronus Voleibol</title>
 
     <script  type="text/javascript" src="{!! asset('assets/jquery/jquery-3.4.1.min.js') !!}"></script>
     <!-- Bootstrap -->
