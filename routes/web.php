@@ -12,7 +12,9 @@
 */
 // ------------------PANTALLA PRINCIPAL------------------------------------
 //Pantalla Principal, para mostrar graficas
+
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+
 
 Route::get('/', function () {
     return view('welcome');
