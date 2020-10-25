@@ -9,7 +9,7 @@
         <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
 
-        <title>Sistema de Gestion Academica | Fe y Alegria</title>
+        <title>Kronus Voleibol</title>
 
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
