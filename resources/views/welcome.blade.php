@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    Esta es la Rama de JosBer
                 </div>
 
                 <div class="links">
