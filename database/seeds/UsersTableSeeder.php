@@ -13,6 +13,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         User::create([
+            'role_id' => 1,
             'name' => 'Jose Bernal',
             'first_name' => 'Yujra',
             'last_name' => 'Charca',
