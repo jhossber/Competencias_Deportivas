@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Esta es la Rama de Master
+                    Esta es la Rama de josecr
                 </div>
 
                 <div class="links">
