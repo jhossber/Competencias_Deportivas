@@ -12,8 +12,16 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
-        Role::create([
-            'description' => 'Admistrador Informático'
-        ]);
+        // Role::create([
+        //     'name' => 'Admistrador Informático',
+        //     'guard_name' => 'web',
+        // ]);
+
+        // Role::create([
+        //     'name' => 'Delegado',
+        //     'guard_name' => 'web',
+        // ]);
+
+
     }
 }

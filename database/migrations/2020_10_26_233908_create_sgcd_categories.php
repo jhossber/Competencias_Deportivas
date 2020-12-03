@@ -24,6 +24,7 @@ class CreateSgcdCategories extends Migration
         });
     }
 
+
     /**
      * Reverse the migrations.
      *

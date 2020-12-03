@@ -8,4 +8,9 @@ class PlaceTeam extends Model
 {
     protected $table = 'sgcd_place_teams';
     protected $primaryKey = 'place_team_id';
+
+    public function teams()
+    {
+        return $this->belongsTo(Team::class,'team_id');
+    }
 }

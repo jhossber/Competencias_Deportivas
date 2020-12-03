@@ -17,14 +17,16 @@ class CreateSgcdPlaceTeams extends Migration
             $table->bigIncrements('place_team_id');
 
             $table->bigInteger('place_id')->unsigned();
-            $table->bigInteger('team_id')->unsigned();
+            $table->bigInteger('team_one')->unsigned();
+            $table->bigInteger('team_two')->unsigned();
 
             $table->dateTime('date_time');
             $table->dateTime('date_game');
             $table->timestamps();
 
             $table->foreign('place_id')->references('place_id')->on('sgcd_places');
-            $table->foreign('team_id')->references('team_id')->on('sgcd_teams');
+            $table->foreign('team_one')->references('team_id')->on('sgcd_teams');
+            $table->foreign('team_two')->references('team_id')->on('sgcd_teams');
         });
     }
 

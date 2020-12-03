@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Team;
+use App\Category;
+use Illuminate\Support\Facades\DB;
 
 class TeamController extends Controller
 {
@@ -13,7 +16,16 @@ class TeamController extends Controller
      */
     public function index()
     {
-        //
+        // $teamsLink = Team::orderBy('team_id', 'ASC')->paginate(2);
+
+        $teams = DB::table('sgcd_teams')
+        ->join('sgcd_categories', 'sgcd_categories.category_id', '=' ,'sgcd_teams.category_id')
+        ->select('sgcd_teams.team_id', 'sgcd_teams.name', 'sgcd_teams.description', 'sgcd_teams.state', 'sgcd_categories.name as namecategory')
+        ->paginate(5);
+
+        return view('team.index', [
+            'teams' => $teams,
+        ]);
     }
 
     /**
@@ -23,7 +35,11 @@ class TeamController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+
+        return view('team.create', [
+            'categories' => $categories,
+        ]);
     }
 
     /**
@@ -34,7 +50,14 @@ class TeamController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $teams = new Team;
+
+        $teams->category_id = $request->category;
+        $teams->name = $request->name;
+        $teams->description = $request->description;
+
+        $teams->save();
+        return redirect()->route('team.index');
     }
 
     /**
@@ -56,7 +79,13 @@ class TeamController extends Controller
      */
     public function edit($id)
     {
-        //
+        $teams = Team::with('category')->findOrfail($id);
+        $categories = Category::all();
+
+        return view('team.editar',[
+            'team' => $teams,
+            'categories' => $categories,
+        ]);
     }
 
     /**
@@ -68,7 +97,16 @@ class TeamController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $teams = Team::find($id);
+
+        $teams->category_id = $request->category;
+
+        $teams->name       = $request->name;
+        $teams->description = $request->description;
+
+        $teams->update();
+
+        return redirect()->route('team.index');
     }
 
     /**
@@ -77,8 +115,24 @@ class TeamController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function state($id)
     {
-        //
+        $teams        = Team::findOrFail($id);
+        $teams->state = ($teams->state ? 0 : 1);
+        $teams->update();
+        return redirect()->route('team.index');
+    }
+
+    public function searchTeam(Request $request){
+        $teams = Team::orderby('team_id','DESC')
+                ->where('name', 'like', "%$request->buscar%")
+                ->paginate(5);
+
+        return view('team.index',[
+                    'teams'=>$teams,
+                    'search'=>$request->buscar,
+                ]
+                );
+
     }
 }

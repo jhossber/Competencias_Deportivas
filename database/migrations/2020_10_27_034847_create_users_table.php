@@ -16,7 +16,7 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->bigInteger('role_id')->unsigned();
+            //$table->bigInteger('role_id')->unsigned();
 
             $table->string('name');
             $table->string('first_name');
@@ -31,7 +31,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
 
-            $table->foreign('role_id')->references('role_id')->on('sgcd_roles');
+            //$table->foreign('role_id')->references('role_id')->on('sgcd_roles');
         });
     }
 

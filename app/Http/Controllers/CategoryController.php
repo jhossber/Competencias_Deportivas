@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
+use App\Category ;
 
 class CategoryController extends Controller
 {
@@ -13,7 +13,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories= Category::orderby('category_id','ASC')->paginate(5);
+        return view('category.index',[
+                    'categories'=>$categories,
+        ]);
     }
 
     /**
@@ -23,7 +26,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('category.create');
     }
 
     /**
@@ -34,7 +37,12 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+            $category = new Category;
+            $category->name = $request->name;
+            $category->description = $request->description;
+            $category->group = $request->group;
+            $category->save();
+            return redirect()->route('category.index');
     }
 
     /**
@@ -56,7 +64,11 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        //findOrfail($id)
+        $category = Category::find($id);
+        return view('category.editar',[
+                    'category'=>$category,
+        ]);
     }
 
     /**
@@ -68,7 +80,12 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $category = Category::findOrfail($id);
+        $category->name = $request->name;
+        $category->description = $request->description;
+        $category->group = $request->group;
+        $category->update();
+        return redirect()->route('category.index');
     }
 
     /**
@@ -77,8 +94,27 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function state($id)
     {
-        //
+        $category = Category::findOrfail($id);
+        $category->state = ($category->state ? 0 : 1);
+        $category->update();
+
+        return redirect()->route('category.index');
     }
+
+    public function searchCategory(Request $request){
+        $categories = Category::orderby('category_id','DESC')
+                ->where('name', 'like', "%$request->buscar%")
+                ->paginate(5);
+        return view('category.index',[
+                    'categories'=>$categories,
+                    'search'=>$request->buscar,
+                ]
+                );
+
+    }
+
+
 }
+
