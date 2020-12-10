@@ -13,9 +13,13 @@
 
 use App\Http\Controllers\UserController;
 
+// Route::get('/', function () {
+//     return redirect()->route('login');
+// });
+
 Route::get('/', function () {
-    return redirect()->route('login');
-});
+    return view('page.page');
+})->name('pages');
 
 
 // ----------------LOGIN-----------------------------------------
@@ -103,15 +107,6 @@ Route::group(['middleware' => 'auth'], function () {
     // Buscar Usuario
     Route::post('/buscarcancha', 'PlaceController@searchPlace')->name('search.place');
 
-
-    //Partidos
-    Route::get('/partidos', 'PlaceTeamController@index')->name('fixture.index');
-    // Route::post('/nuevo-rol/guardar', 'RoleController@store')->name('role.store');
-    Route::get('/nuevo-partido', 'PlaceTeamController@create')->name('fixture.create');
-    // Route::get('/editar-rol/{role_id}', 'RoleController@edit')->name('role.edit');
-    // Route::put('/editar-rol/actualizar/{role_id}', 'RoleController@update')->name('role.update');
-    // Route::get('/rol/estado/{role_id}','RoleController@state')->name('role.state');
-
     //Equipos
     Route::get('/equipos', 'TeamController@index')->name('team.index');
     Route::post('/nuevo-equipo/guardar', 'TeamController@store')->name('team.store');
@@ -121,5 +116,23 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/equipo/estado/{team_id}','TeamController@state')->name('team.state');
     // Buscar Usuario
     Route::post('/buscarequipo', 'TeamController@searchTeam')->name('search.team');
+
+    //Partidos
+    Route::get('/partidos', 'PlaceTeamController@index')->name('fixture.index');
+    Route::post('/nuevo-partido/guardar', 'PlaceTeamController@store')->name('fixture.store');
+    Route::get('/nuevo-partido', 'PlaceTeamController@create')->name('fixture.create');
+    Route::get('/editar-partido/{place_team_id}', 'PlaceTeamController@edit')->name('fixture.edit');
+    Route::put('/editar-partido/actualizar/{place_team_id}', 'PlaceTeamController@update')->name('fixture.update');
+    Route::get('/rol/estado/{role_id}','PlaceTeamController@state')->name('fixture.state');
+
+    /////points/////
+    Route::get('/puntuaciones', 'PointController@index')->name('point.index');
+    Route::post('/nueva-puntuacion/guardar', 'PointController@store')->name('point.store');
+    Route::get('/nueva-puntuacion', 'PointController@create')->name('point.create');
+    Route::get('/editar-puntuacion/{point_id}', 'PointController@edit')->name('point.edit');
+    Route::put('/editar-puntuacion/actualizar/{point_id}', 'PointController@update')->name('point.update');
+    Route::get('/puntuacion/estado/{point_id}','PointController@state')->name('point.state');
+    // Buscar Puntos
+    Route::post('/buscarpuntuacion', 'PointController@searchPoint')->name('search.point');
 
 });

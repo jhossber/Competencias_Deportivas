@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\PlaceTeam;
 use App\Team;
 use App\Place;
+use Illuminate\Support\Facades\DB;
 
 class PlaceTeamController extends Controller
 {
@@ -47,6 +48,17 @@ class PlaceTeamController extends Controller
      */
     public function create()
     {
+        $teams = Team::all();
+        $places = Place::all();
+
+        return view('fixture.create', [
+           'teams' => $teams,
+           'places' => $places,
+        ]
+        );
+
+
+
         $players = Team::pluck('name')->all();
         // $roles = Role::pluck('id','name')->all();
         // return $teams;
@@ -55,24 +67,22 @@ class PlaceTeamController extends Controller
         // return $players;
 
         // $matchs = array();
-        $matchs = [];
+        // $matchs = [];
 
-        foreach($players as $k){
-            foreach($players as $j){
-                if($k == $j){
-                    continue;
-                }
-                $z = array($k,$j);
-                sort($z);
-                if(!in_array($z,$matchs)){
-                    $matchs[] = $z;
-                }
-            }
-        }
-
+        // foreach($players as $k){
+        //     foreach($players as $j){
+        //         if($k == $j){
+        //             continue;
+        //         }
+        //         $z = array($k,$j);
+        //         sort($z);
+        //         if(!in_array($z,$matchs)){
+        //             $matchs[] = $z;
+        //         }
+        //     }
+        // }
         // print_r($matchs);
-        return $matchs;
-        dd();
+
     }
 
     /**
@@ -83,7 +93,16 @@ class PlaceTeamController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $fixture = new PlaceTeam;
+        $fixture->team_one = $request->team_one;
+        $fixture->team_two = $request->team_two;
+        $fixture->place_id = $request->place;
+
+        $fixture->date_time = $request->date_time;
+        $fixture->date_game = $request->date_game;
+
+        $fixture->save();
+        return redirect()->route('fixture.index');
     }
 
     /**
@@ -105,7 +124,39 @@ class PlaceTeamController extends Controller
      */
     public function edit($id)
     {
-        //
+        // $teamscategories = DB::table('sgcd_teams')
+        // ->join('sgcd_categories', 'sgcd_categories.category_id', '=' ,'sgcd_teams.category_id')
+        // ->select('sgcd_categories.category_id as id_category', 'sgcd_categories.name as namecategory', DB::raw('count(sgcd_teams.team_id) as nroteams'))
+        // ->where('category_id', $id)
+        // ->groupBy('sgcd_categories.name')
+        // // ->orderBy('nroteams', 'DESC')
+        // ->get();
+
+        $fixture = PlaceTeam::with('teams', 'places')->findOrfail($id);
+        $teams = Team::all();
+        $places = Place::all();
+
+        return view('fixture.editar', [
+           'teams' => $teams ,
+           'fixture' => $fixture,
+           'places' => $places,
+        ]);
+
+
+        // $teamc = Team::orderby('team_id','DESC')
+        //         ->where('category_id', '=', "$id")
+        //         ->get();
+
+        // $count = 1;
+        // //         // ->paginate(5);
+        // return view('fixture.editar',[
+        //     'teamc' => $teamc,
+        //     'count' => $count,
+        // ]);
+
+        // return +$teamc;
+
+
     }
 
     /**

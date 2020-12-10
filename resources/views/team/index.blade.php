@@ -120,16 +120,102 @@
                             <div class="text-center">
                                 {{ $teams->links() }}
                             </div>
-
-
-
-
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="row" style="display: block;">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel table-responsive">
+                    <div class="x_title">
+                        <h2>
+                            Listado de Equipos por Categoria
+                        </h2>
+                        <div class="title_right">
+                            <div class="col-md-5 col-sm-5 form-group pull-right top_search">
+                                <form action="{{ route('search.team') }}" method="POST">
+                                @csrf
+                                <div class="input-group">
+                                <input class="form-control" placeholder="Ingresar el nombre de Equipo" type="text" name="buscar" value="{{ !empty($search)?$search:"" }}">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-primary" style="color:white;" type="submit">
+                                                    Buscar
+                                                </button>
+                                            </span>
+                                        </input>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                        </div>
+                    </div>
+                    <div class="x_content">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            #
+                                        </th>
+                                        <th>
+                                            Categoria
+                                        </th>
+                                        <th>
+                                            Cantidad de Equipos
+                                        </th>
+                                        <th class="text-center">
+                                            Acciones
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($teamscategories as $teamscategory)
+                                    <tr>
+                                        <th scope="row">
+                                            {{ $teamscategory->id_category }}
+                                        </th>
+                                        <th>
+                                            {{ $teamscategory->namecategory }}
+                                        </th>
+                                        <td>
+                                            {{ $teamscategory->nroteams }}
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="{{ route('fixture.edit', $teamscategory->id_category) }}">
+                                                <button class="btn btn-primary btn-xs" type="button">
+                                                    <i class="fa fa-edit">
+                                                    </i>
+                                                </button>
+                                            </a>
+                                            {{-- @can('player.state') --}}
+                                            <a href="{{ route('team.state',$team->team_id) }}" title="{{ $team->state?'Desactivar':'Activar' }}">
+                                                <button class="btn btn-{{ $team->state?'danger':'success' }} btn-xs modalState" type="submit">
+                                                    <i class="fa fa-{{ $team->state?'times':'check' }}">
+                                                    </i>
+                                                </button>
+                                            </a>
+                                            {{-- @else
+                                                No puede Borrar
+                                            @endcan --}}
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            <div class="text-center">
+                                {{ $teamscategories->links() }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
     </div>
 </div>
 @endsection

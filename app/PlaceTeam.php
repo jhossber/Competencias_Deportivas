@@ -13,4 +13,9 @@ class PlaceTeam extends Model
     {
         return $this->belongsTo(Team::class,'team_id');
     }
+
+    public function places()
+    {
+        return $this->belongsTo(Team::class, 'place_id');
+    }
 }

@@ -17,6 +17,23 @@ class TeamController extends Controller
     public function index()
     {
         // $teamsLink = Team::orderBy('team_id', 'ASC')->paginate(2);
+        // SELECT c.name, COUNT(t.team_id) FROM sgcd_teams t
+        // INNER JOIN sgcd_categories c ON c.category_id = t.category_id
+        // GROUP BY c.name;
+
+        // $collection = Team::all()->groupBy('category_id');
+        // return $collection;
+        // dd();
+
+        $teamscategories = DB::table('sgcd_teams')
+        ->join('sgcd_categories', 'sgcd_categories.category_id', '=' ,'sgcd_teams.category_id')
+        ->select('sgcd_categories.category_id as id_category', 'sgcd_categories.name as namecategory', DB::raw('count(sgcd_teams.team_id) as nroteams'))
+        ->groupBy('sgcd_categories.name')
+        // ->orderBy('nroteams', 'DESC')
+        ->paginate(5);
+
+        // return $teamscategories;
+
 
         $teams = DB::table('sgcd_teams')
         ->join('sgcd_categories', 'sgcd_categories.category_id', '=' ,'sgcd_teams.category_id')
@@ -25,6 +42,7 @@ class TeamController extends Controller
 
         return view('team.index', [
             'teams' => $teams,
+            'teamscategories' => $teamscategories,
         ]);
     }
 

@@ -44,7 +44,7 @@
               <li><a href="{{ route('category.index') }}">Categorias</a></li>
               <li><a href="{{ route('place.index') }}">Canchas</a></li>
               <li><a href="{{ route('fixture.index') }}">Rol de Partidos</a></li>
-              <li><a href="#">Tabla de Posicion</a></li>
+              <li><a href="{{ route('point.index') }}">Tabla de Posicion</a></li>
             </ul>
           </li>
         </ul>

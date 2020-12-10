@@ -11,7 +11,7 @@
             <div class="title_right">
                 <div class="col-md-3 col-sm-3 form-group pull-right top_search">
                     <span>
-                        <a href="{{ route('user.create') }}">
+                        <a href="{{ route('fixture.create') }}">
                             <button class="btn btn-success" type="button">
                                 <i class="fa fa-plus">
                                 </i>
@@ -73,10 +73,6 @@
                                         <th>
                                             Cancha
                                         </th>
-
-                                        <th class="text-center">
-                                            Estado
-                                        </th>
                                         <th class="text-center">
                                             Acciones
                                         </th>
@@ -109,24 +105,19 @@
                                             {{ $fixture->place_id }}
                                         </td>
 
-                                        {{-- <td class="text-center">
-                                            <spam class="label label-{{ $user->state?'success':'danger' }}" >
-                                                {{ $user->state?'Activo':'Inactivo' }}
-                                            </spam>
-                                        </td>
                                         <td class="text-center">
-                                            <a href="{{ route('user.edit', $user->id) }}">
+                                            <a href="{{ route('fixture.edit', $fixture->place_team_id) }}">
                                                 <button class="btn btn-primary btn-xs" type="button">
                                                     <i class="fa fa-edit">
                                                     </i>
                                                 </button>
                                             </a>
-                                            <a href="{{ route('user.state',$user->id) }}" title="{{ $user->state?'Desactivar':'Activar' }}">
-                                                <button class="btn btn-{{ $user->state?'danger':'success' }} btn-xs modalState" type="submit">
-                                                    <i class="fa fa-{{ $user->state?'times':'check' }}">
+                                            <a href="{{ route('fixture.state',$fixture->place_team_id) }}">
+                                                <button class="btn btn-danger btn-xs modalState" type="submit">
+                                                    <i class="fa fa-times check">
                                                     </i>
                                                 </button>
-                                            </a> --}}
+                                            </a>
                                         </td>
                                     </tr>
                                     @endforeach
